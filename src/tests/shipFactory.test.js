@@ -2,7 +2,6 @@ import shipFactory from "../shipFactory";
 
 test("returns an object with the correct length property", () => {
   const ship = shipFactory(6);
-  expect(ship).toHaveProperty("length");
   expect(ship.length).toBe(6);
 });
 
@@ -17,17 +16,18 @@ test("returns an object with an isSunk() function", () => {
 });
 
 describe("isSunk() method", () => {
-  let ship = shipFactory(5);
-
   test("works properly when not sunk", () => {
+    let ship = shipFactory(5);
     let isSunk = ship.isSunk();
     expect(isSunk).toBe(false);
   });
 
-  ship = shipFactory(0);
   test("works properly when sunk", () => {
-    let isSunk = ship.isSunk();
+    let ship = shipFactory(3);
     ship.hit(0);
+    ship.hit(1);
+    ship.hit(2);
+    let isSunk = ship.isSunk();
     expect(isSunk).toBe(true);
   });
 });
@@ -36,6 +36,13 @@ describe("hit() method", () => {
   test("updates shipBlock at correct location", () => {
     let ship = shipFactory(4);
     ship.hit(3);
-    expect(ship.shipBlocks[3]).toBeNull();
+    expect(ship.getShipBlocks()[3]).toBeNull();
+  });
+});
+
+describe("getShipBlocks() method", () => {
+  test("returns correct shipBlocks array", () => {
+    let ship = shipFactory(5);
+    expect(ship.getShipBlocks().length).toBe(5);
   });
 });
