@@ -4,12 +4,12 @@
   "description": "Battleship Project for TOP",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gcerv93/battleship.git",
-    "build": "webpack"
+    "url": "git+https://github.com/gcerv93/battleship.git"
   },
   "author": "",
   "license": "ISC",
