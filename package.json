@@ -21,6 +21,11 @@
   "homepage": "https://github.com/gcerv93/battleship#readme",
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "eslint": "^8.11.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.0",
     "webpack": "^5.70.0",
