@@ -1,0 +1,1 @@
+I will be creating Battleship game that runs on the browser for The Odin Project. This project will be built with HTML/CSS/JS. I will be using Test Driven Development for the first time through the development of this project.
