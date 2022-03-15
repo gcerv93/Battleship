@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/gcerv93/battleship#readme",
   "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2"
   }
