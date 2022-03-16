@@ -116,6 +116,7 @@ describe("object methods", () => {
         gameboard.placeShip([2, 2], "horizontal", ship);
         gameboard.receiveAttack([2, 2]);
         expect(myMock.mock.calls.length).toBe(1);
+        expect(myMock.mock.calls[0][0]).toBe(0);
       });
     });
   });
