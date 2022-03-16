@@ -1,4 +1,4 @@
-const shipFactory = (length) => {
+const shipFactory = (name, length) => {
   const shipBlocks = new Array(length).fill(true);
 
   const getShipBlocks = () => shipBlocks;
@@ -13,7 +13,7 @@ const shipFactory = (length) => {
     return result;
   }
 
-  return { length, getShipBlocks, hit, isSunk };
+  return { name, length, getShipBlocks, hit, isSunk };
 };
 
 export default shipFactory;
