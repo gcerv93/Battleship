@@ -1,4 +1,4 @@
-import shipFactory from "../shipFactory";
+import shipFactory from "../appLogic/shipFactory";
 
 test("returns an object with the correct name property", () => {
   const ship = shipFactory("carrier", 5);

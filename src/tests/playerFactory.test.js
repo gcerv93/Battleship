@@ -1,4 +1,4 @@
-import playerFactory from "../playerFactory";
+import playerFactory from "../appLogic/playerFactory";
 
 test("returns an object with a playerTurn method", () => {
   let player = playerFactory("player1");

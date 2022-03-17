@@ -1,4 +1,4 @@
-import gameBoardFactory from "../gameBoardFactory";
+import gameBoardFactory from "../appLogic/gameBoardFactory";
 
 test("returns an object with a getBoard method", () => {
   let gameboard = gameBoardFactory();
