@@ -10,6 +10,11 @@ test("returns an object with a generateMove method", () => {
   expect(computer).toHaveProperty("generateMove");
 });
 
+test("returns an object with a previousMoves property", () => {
+  let computer = computerFactory();
+  expect(computer).toHaveProperty("previousMoves");
+});
+
 describe("generateMove method", () => {
   test("returns a 2 element array", () => {
     let computer = computerFactory();
@@ -35,11 +40,17 @@ describe("generateMove method", () => {
 describe("compTurn method", () => {
   test("sends the receiveAttack message to enemyBoard", () => {
     let computer = computerFactory();
-    let coords = [3, 3];
     let myMock = jest.fn();
     let enemyBoard = { receiveAttack: myMock };
-    computer.compTurn(coords, enemyBoard);
+    computer.compTurn(enemyBoard);
     expect(myMock.mock.calls.length).toBe(1);
-    expect(myMock.mock.calls[0][0]).toBe(coords);
+  });
+
+  test("pushes move into previousMoves array", () => {
+    let computer = computerFactory();
+    let myMock = jest.fn();
+    let previousMoves = computer.previousMoves.length;
+    computer.compTurn({ receiveAttack: myMock });
+    expect(computer.previousMoves.length).toBe(previousMoves + 1);
   });
 });
