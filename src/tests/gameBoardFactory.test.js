@@ -103,7 +103,13 @@ describe("object methods", () => {
       test("changes object at location's hit property to true", () => {
         let gameboard = gameBoardFactory();
         let myMock = jest.fn();
-        let ship = { name: "submarine", length: 3, hit: myMock };
+        const myOtherMock = jest.fn();
+        let ship = {
+          name: "submarine",
+          length: 3,
+          hit: myMock,
+          isSunk: myOtherMock,
+        };
         gameboard.placeShip([3, 3], "vertical", ship);
         gameboard.receiveAttack([3, 3]);
         expect(gameboard.getBoard()[3][3].hit).toBe(true);
@@ -112,11 +118,49 @@ describe("object methods", () => {
       test("sends the hit function to the ship", () => {
         let gameboard = gameBoardFactory();
         const myMock = jest.fn();
-        let ship = { name: "destroyer", length: 3, hit: myMock };
+        const myOtherMock = jest.fn();
+        let ship = {
+          name: "destroyer",
+          length: 3,
+          hit: myMock,
+          isSunk: myOtherMock,
+        };
         gameboard.placeShip([2, 2], "horizontal", ship);
         gameboard.receiveAttack([2, 2]);
         expect(myMock.mock.calls.length).toBe(1);
         expect(myMock.mock.calls[0][0]).toBe(0);
+      });
+
+      test("sends the isSunk message to the ship", () => {
+        let gameboard = gameBoardFactory();
+        const myMock = jest.fn();
+        const myOtherMock = jest.fn();
+        let ship = {
+          name: "submarine",
+          length: 3,
+          hit: myOtherMock,
+          isSunk: myMock,
+        };
+        gameboard.placeShip([4, 4], "horizontal", ship);
+        gameboard.receiveAttack([4, 4]);
+        expect(myMock.mock.calls.length).toBe(1);
+      });
+
+      test("removes ship from ships array if ship is sunk", () => {
+        let gameboard = gameBoardFactory();
+        const myMock = jest.fn();
+        const myOtherMock = jest.fn();
+        const shipsArrayLength = gameboard.getShips().length;
+        let ship = {
+          name: "patrol boat",
+          length: 2,
+          hit: myOtherMock,
+          isSunk: myMock,
+        };
+        myMock.mockReturnValue(true);
+        gameboard.placeShip([3, 3], "horizontal", ship);
+        gameboard.receiveAttack([3, 3]);
+        expect(gameboard.getShips().length).toBe(shipsArrayLength - 1);
       });
     });
   });

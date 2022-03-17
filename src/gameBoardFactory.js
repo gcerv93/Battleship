@@ -44,6 +44,12 @@ const gameBoardFactory = () => {
     return true;
   }
 
+  function sinkShip(sunkShip) {
+    const index = ships.findIndex((ship) => sunkShip.name === ship.name);
+
+    ships.splice(index, 1);
+  }
+
   function placeVertically(coords, ship) {
     for (let i = 0; i < ship.length; i += 1) {
       board[coords[0] + i][coords[1]] = {
@@ -83,10 +89,21 @@ const gameBoardFactory = () => {
       const obj = board[coords[0]][coords[1]];
       obj.hit = true;
       obj.ship.hit(obj.index);
+
+      if (obj.ship.isSunk()) {
+        sinkShip(obj.ship);
+      }
     }
   }
 
-  return { getBoard, getShips, allSunk, placeShip, missed, receiveAttack };
+  return {
+    getBoard,
+    getShips,
+    allSunk,
+    placeShip,
+    missed,
+    receiveAttack,
+  };
 };
 
 export default gameBoardFactory;
