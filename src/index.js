@@ -1,3 +1,4 @@
 import "./styles.css";
+import gameLoop from "./appLogic/gameLoop";
 
-console.log("yooo");
+gameLoop();

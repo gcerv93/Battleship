@@ -75,10 +75,45 @@ header {
   border: 1px solid black;
   height: 500px;
   width: 500px;
+  display: flex;
+  flex-direction: column;
 }
 
 .right {
   border: 1px solid black;
   height: 500px;
   width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex: 1;
+}
+
+.cell {
+  outline: 0.1px solid black;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.right .cell:hover {
+  background-color: gray;
+}
+
+.occupied {
+  outline: 0.1px solid black;
+  flex: 1;
+  background-color: darkslategrey;
+}
+
+.hit {
+  background-color: rgb(255, 79, 79);
+  pointer-events: none;
+}
+
+.miss {
+  background-color: lightgreen;
+  pointer-events: none;
 }
