@@ -15,6 +15,7 @@ const gameBoardFactory = () => {
   ];
 
   const missed = [];
+  const hits = [];
 
   function createShips() {
     const carrier = shipFactory("carrier", 5);
@@ -89,6 +90,7 @@ const gameBoardFactory = () => {
       const obj = board[coords[0]][coords[1]];
       obj.hit = true;
       obj.ship.hit(obj.index);
+      hits.push(coords);
 
       if (obj.ship.isSunk()) {
         sinkShip(obj.ship);
@@ -102,6 +104,7 @@ const gameBoardFactory = () => {
     allSunk,
     placeShip,
     missed,
+    hits,
     receiveAttack,
   };
 };

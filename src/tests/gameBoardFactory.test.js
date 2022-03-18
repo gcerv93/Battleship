@@ -30,6 +30,11 @@ test("returns an object with a getShips method", () => {
   expect(gameboard).toHaveProperty("getShips");
 });
 
+test("returns an object with a hits method", () => {
+  let gameboard = gameBoardFactory();
+  expect(gameboard).toHaveProperty("hits");
+});
+
 describe("object methods", () => {
   describe("placeShip", () => {
     describe("vertical positioning", () => {
@@ -161,6 +166,23 @@ describe("object methods", () => {
         gameboard.placeShip([3, 3], "horizontal", ship);
         gameboard.receiveAttack([3, 3]);
         expect(gameboard.getShips().length).toBe(shipsArrayLength - 1);
+      });
+
+      test("adds hits to hits array when shot hits", () => {
+        let gameboard = gameBoardFactory();
+        const myMock = jest.fn();
+        const myOtherMock = jest.fn();
+        const hitsArrayLength = gameboard.hits.length;
+        let ship = {
+          name: "submarine",
+          length: 3,
+          hit: myOtherMock,
+          isSunk: myMock,
+        };
+        myMock.mockReturnValue(true);
+        gameboard.placeShip([2, 2], "horizontal", ship);
+        gameboard.receiveAttack([2, 2]);
+        expect(gameboard.hits.length).toBe(hitsArrayLength + 1);
       });
     });
   });
