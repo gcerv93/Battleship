@@ -1,3 +1,16 @@
+const isArrayInArray = (arr, item) => {
+  const itemAsString = JSON.stringify(item);
+
+  const contains = arr.some((ele) => JSON.stringify(ele) === itemAsString);
+  return contains;
+};
+
+const clearDisplay = (element) => {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+};
+
 const displayLeftDiv = (board) => {
   const leftDiv = document.querySelector(".left");
 
@@ -20,13 +33,6 @@ const displayLeftDiv = (board) => {
     });
     leftDiv.appendChild(rowCell);
   });
-};
-
-const isArrayInArray = (arr, item) => {
-  const itemAsString = JSON.stringify(item);
-
-  const contains = arr.some((ele) => JSON.stringify(ele) === itemAsString);
-  return contains;
 };
 
 const displayRightDiv = (board) => {
@@ -53,4 +59,21 @@ const displayRightDiv = (board) => {
   });
 };
 
-export { displayLeftDiv, displayRightDiv };
+const addEventListeners = (board) => {
+  const compBoard = document.querySelector(".right");
+  compBoard.addEventListener(
+    "click",
+    (e) => {
+      if (e.target.parentElement !== compBoard) {
+        const rowIndex = parseInt(e.target.parentElement.dataset.index, 10);
+        const cellIndex = parseInt(e.target.dataset.index, 10);
+        board.receiveAttack([rowIndex, cellIndex]);
+        clearDisplay(compBoard);
+        displayRightDiv(board);
+      }
+    },
+    { once: true }
+  );
+};
+
+export { displayLeftDiv, displayRightDiv, addEventListeners };
