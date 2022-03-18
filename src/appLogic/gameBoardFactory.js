@@ -37,6 +37,20 @@ const gameBoardFactory = () => {
     return board;
   }
 
+  function getOccupied() {
+    const occupied = [];
+
+    board.forEach((row, i) => {
+      row.forEach((element, idx) => {
+        if (element !== false) {
+          occupied.push([i, idx]);
+        }
+      });
+    });
+
+    return occupied;
+  }
+
   function allSunk(gameShips = ships) {
     if (gameShips.length > 0) {
       return false;
@@ -106,6 +120,7 @@ const gameBoardFactory = () => {
     missed,
     hits,
     receiveAttack,
+    getOccupied,
   };
 };
 

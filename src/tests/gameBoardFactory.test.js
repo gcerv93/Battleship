@@ -1,15 +1,5 @@
 import gameBoardFactory from "../appLogic/gameBoardFactory";
 
-test("returns an object with a getBoard method", () => {
-  let gameboard = gameBoardFactory();
-  expect(gameboard).toHaveProperty("getBoard");
-});
-
-test("returns an object with a receiveAttack method", () => {
-  let gameboard = gameBoardFactory();
-  expect(gameboard).toHaveProperty("receiveAttack");
-});
-
 test("returns an object with a missed property", () => {
   let gameboard = gameBoardFactory();
   expect(gameboard).toHaveProperty("missed");
@@ -25,14 +15,29 @@ test("returns an object with a allSunk property", () => {
   expect(gameboard).toHaveProperty("allSunk");
 });
 
+test("returns an object with a hits property", () => {
+  let gameboard = gameBoardFactory();
+  expect(gameboard).toHaveProperty("hits");
+});
+
+test("returns an object with a getOccupied method", () => {
+  let gameboard = gameBoardFactory();
+  expect(gameboard).toHaveProperty("getOccupied");
+});
+
+test("returns an object with a getBoard method", () => {
+  let gameboard = gameBoardFactory();
+  expect(gameboard).toHaveProperty("getBoard");
+});
+
+test("returns an object with a receiveAttack method", () => {
+  let gameboard = gameBoardFactory();
+  expect(gameboard).toHaveProperty("receiveAttack");
+});
+
 test("returns an object with a getShips method", () => {
   let gameboard = gameBoardFactory();
   expect(gameboard).toHaveProperty("getShips");
-});
-
-test("returns an object with a hits method", () => {
-  let gameboard = gameBoardFactory();
-  expect(gameboard).toHaveProperty("hits");
 });
 
 describe("object methods", () => {
@@ -199,6 +204,26 @@ describe("object methods", () => {
       let ships = [];
       const result = gameboard.allSunk(ships);
       expect(result).toBe(true);
+    });
+  });
+
+  describe("getOccupied", () => {
+    test("returns the coordinates of the board that are occupied", () => {
+      let gameboard = gameBoardFactory();
+      let myMock = jest.fn();
+      let myOtherMock = jest.fn();
+      let ship = {
+        name: "submarine",
+        length: 3,
+        hit: myOtherMock,
+        isSunk: myMock,
+      };
+      gameboard.placeShip([3, 3], "horizontal", ship);
+      const result = gameboard.getOccupied();
+      expect(result).toContainEqual([3, 3]);
+      expect(result).toContainEqual([3, 4]);
+      expect(result).toContainEqual([3, 5]);
+      expect(result.length).toBe(3);
     });
   });
 });
