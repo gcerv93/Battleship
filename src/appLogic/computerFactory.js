@@ -17,6 +17,19 @@ const computerFactory = () => {
     return result;
   }
 
+  function generatePlacement() {
+    const result = [];
+
+    const x = randomInteger(0, 9);
+    const y = randomInteger(0, 9);
+    const z = randomInteger(1, 2);
+
+    result.push([x, y]);
+    result.push(z);
+
+    return result;
+  }
+
   function compTurn(enemyBoard) {
     let coords = generateMove();
 
@@ -28,7 +41,7 @@ const computerFactory = () => {
     previousMoves.push(coords);
   }
 
-  return { previousMoves, generateMove, compTurn };
+  return { previousMoves, generateMove, generatePlacement, compTurn };
 };
 
 export default computerFactory;

@@ -10,6 +10,11 @@ test("returns an object with a generateMove method", () => {
   expect(computer).toHaveProperty("generateMove");
 });
 
+test("returns an object with a generatePlacement method", () => {
+  let computer = computerFactory();
+  expect(computer).toHaveProperty("generatePlacement");
+});
+
 test("returns an object with a previousMoves property", () => {
   let computer = computerFactory();
   expect(computer).toHaveProperty("previousMoves");
@@ -52,5 +57,20 @@ describe("compTurn method", () => {
     let previousMoves = computer.previousMoves.length;
     computer.compTurn({ receiveAttack: myMock });
     expect(computer.previousMoves.length).toBe(previousMoves + 1);
+  });
+});
+
+describe("generatePlacement method", () => {
+  test("returns an array with 2 values", () => {
+    let computer = computerFactory();
+    let result = computer.generatePlacement();
+    expect(result.length).toBe(2);
+  });
+
+  test("second element in return value is either 1 or 2", () => {
+    let computer = computerFactory();
+    let result = computer.generatePlacement();
+    expect(result[1]).toBeGreaterThanOrEqual(1);
+    expect(result[1]).toBeLessThanOrEqual(2);
   });
 });
