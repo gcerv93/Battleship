@@ -29,6 +29,12 @@ const displayLeftDiv = (board) => {
         boardCell.classList.add("occupied");
       }
 
+      if (cell.hit === true) {
+        boardCell.classList.add("hit");
+      } else if (isArrayInArray(board.missed, [i, idx])) {
+        boardCell.classList.add("miss");
+      }
+
       rowCell.appendChild(boardCell);
     });
     leftDiv.appendChild(rowCell);
