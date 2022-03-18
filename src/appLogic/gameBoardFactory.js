@@ -65,6 +65,59 @@ const gameBoardFactory = () => {
     ships.splice(index, 1);
   }
 
+  function generateUnavailable(arr) {
+    const unavailable = [];
+    unavailable.push(arr);
+    unavailable.push([arr[0], arr[1] + 1]);
+    unavailable.push([arr[0], arr[1] - 1]);
+    unavailable.push([arr[0] + 1, arr[1]]);
+    unavailable.push([arr[0] + 1, arr[1] + 1]);
+    unavailable.push([arr[0] + 1, arr[1] - 1]);
+    unavailable.push([arr[0] - 1, arr[1]]);
+    unavailable.push([arr[0] - 1, arr[1] + 1]);
+    unavailable.push([arr[0] - 1, arr[1] - 1]);
+
+    return unavailable;
+  }
+
+  const isArrayInArray = (arr, item) => {
+    const itemAsString = JSON.stringify(item);
+
+    const contains = arr.some((ele) => JSON.stringify(ele) === itemAsString);
+    return contains;
+  };
+
+  function validatePlacement(coords, orientation, ship) {
+    const occupied = getOccupied();
+    const unavailable = [];
+    occupied.forEach((arr) => {
+      generateUnavailable(arr).forEach((ele) => unavailable.push(ele));
+    });
+
+    let x = coords[0];
+    let y = coords[1];
+    if (isArrayInArray(unavailable, coords)) return false;
+    for (let i = 1; i < ship.length; i += 1) {
+      let checkCoords;
+
+      if (orientation === "vertical") {
+        x += 1;
+        if (x > 9) return false;
+        checkCoords = [x, y];
+      } else {
+        y += 1;
+        if (y > 9) return false;
+        checkCoords = [x, y];
+      }
+
+      if (isArrayInArray(unavailable, checkCoords)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   function placeVertically(coords, ship) {
     for (let i = 0; i < ship.length; i += 1) {
       board[coords[0] + i][coords[1]] = {
@@ -121,6 +174,7 @@ const gameBoardFactory = () => {
     hits,
     receiveAttack,
     getOccupied,
+    validatePlacement,
   };
 };
 
