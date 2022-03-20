@@ -178,3 +178,13 @@ header {
 .rotate:hover {
   transform: scale(1.03)
 }
+
+.placerCell {
+  background-color: aquamarine;
+  cursor: pointer;
+}
+
+.errorCell {
+  background-color: red;
+  cursor: pointer;
+}
