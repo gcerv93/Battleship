@@ -1,22 +1,33 @@
-const playerShipPlacement = (board) => {
+const placementDisplay = (board) => {
   const container = document.querySelector(".placer");
   board.getBoard().forEach((row, i) => {
     const rowCell = document.createElement("div");
     rowCell.dataset.index = i;
     rowCell.classList.add("row");
-    row.forEach((_cell, idx) => {
+    row.forEach((cell, idx) => {
       const boardCell = document.createElement("div");
       boardCell.dataset.row = i;
       boardCell.dataset.index = idx;
-      boardCell.classList.add("cell");
+      if (cell === false) {
+        boardCell.classList.add("cell");
+      } else {
+        boardCell.classList.add("occupied");
+      }
       rowCell.appendChild(boardCell);
     });
     container.appendChild(rowCell);
   });
 };
 
+const clearDisplay = (element) => {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+};
+
 const playerPlaceShips = (() => {
   let rotator = 1;
+  let idx = 0;
 
   const horizontalElement = (rowIndex, cellIndex, i) => {
     const rowNum = parseInt(rowIndex, 10);
@@ -38,64 +49,75 @@ const playerPlaceShips = (() => {
     return hoverCell;
   };
 
-  const placePicker = (board, ship) => {
+  const placePicker = (board, ships) => {
+    let ship = ships[idx];
+
     const shipText = document.querySelector(".shipText");
     shipText.textContent = ship.name;
 
     const cells = document.querySelectorAll(".placer .cell");
 
+    const hoverListener = (e) => {
+      const rowIndex = e.target.parentElement.dataset.index;
+      const cellIndex = e.target.dataset.index;
+      if (rotator === 1) {
+        for (let i = 0; i < ship.length; i += 1) {
+          const hoverCell = horizontalElement(rowIndex, cellIndex, i);
+          hoverCell.classList.add("placerCell");
+        }
+      } else if (rotator === 2) {
+        for (let i = 0; i < ship.length; i += 1) {
+          const hoverCell = verticalElement(rowIndex, cellIndex, i);
+          hoverCell.classList.add("placerCell");
+        }
+      }
+    };
+
+    const hoverOutListener = (e) => {
+      const rowIndex = e.target.parentElement.dataset.index;
+      const cellIndex = e.target.dataset.index;
+      if (rotator === 1) {
+        for (let i = 0; i < ship.length; i += 1) {
+          const hoverCell = horizontalElement(rowIndex, cellIndex, i);
+          hoverCell.classList.remove("placerCell");
+        }
+      } else if (rotator === 2) {
+        for (let i = 0; i < ship.length; i += 1) {
+          const hoverCell = verticalElement(rowIndex, cellIndex, i);
+          hoverCell.classList.remove("placerCell");
+        }
+      }
+    };
+
     cells.forEach((cell) => {
-      cell.addEventListener("mouseenter", (e) => {
-        const rowIndex = e.target.parentElement.dataset.index;
-        const cellIndex = e.target.dataset.index;
-        if (rotator === 1) {
-          for (let i = 0; i < ship.length; i += 1) {
-            const hoverCell = horizontalElement(rowIndex, cellIndex, i);
-            hoverCell.classList.add("placerCell");
-          }
-        } else if (rotator === 2) {
-          for (let i = 0; i < ship.length; i += 1) {
-            const hoverCell = verticalElement(rowIndex, cellIndex, i);
-            hoverCell.classList.add("placerCell");
-          }
-        }
-      });
-
-      cell.addEventListener("mouseleave", (e) => {
-        const rowIndex = e.target.parentElement.dataset.index;
-        const cellIndex = e.target.dataset.index;
-        if (rotator === 1) {
-          for (let i = 0; i < ship.length; i += 1) {
-            const hoverCell = horizontalElement(rowIndex, cellIndex, i);
-            hoverCell.classList.remove("placerCell");
-          }
-        } else if (rotator === 2) {
-          for (let i = 0; i < ship.length; i += 1) {
-            const hoverCell = verticalElement(rowIndex, cellIndex, i);
-            hoverCell.classList.remove("placerCell");
-          }
-        }
-      });
-
-      cell.addEventListener("click", (e) => {
-        console.log(ship, board);
-        console.log(board.getBoard());
+      cell.addEventListener("mouseenter", hoverListener);
+      cell.addEventListener("mouseleave", hoverOutListener);
+      const listener = (e) => {
+        const x = parseInt(e.target.dataset.row, 10);
+        const y = parseInt(e.target.dataset.index, 10);
         let orientation;
         if (rotator === 1) {
           orientation = "horizontal";
         } else {
           orientation = "vertical";
         }
-
-        console.log(e.target.dataset.row, e.target.dataset.index);
-        console.log(
-          board.validatePlacement(
-            [e.target.dataset.row, e.target.dataset.index],
-            orientation,
-            ship
-          )
-        );
-      });
+        if (board.validatePlacement([x, y], orientation, ship) === true) {
+          board.placeShip([x, y], orientation, ship);
+          idx += 1;
+          if (idx === ships.length) {
+            const overlay = document.querySelector("#overlay");
+            overlay.classList.remove("overlay");
+            const popup = document.querySelector(".placement");
+            popup.style.display = "none";
+          }
+          ship = ships[idx];
+          clearDisplay(document.querySelector(".placer"));
+          placementDisplay(board);
+          placePicker(board, ships);
+        }
+        cell.removeEventListener("click", listener);
+      };
+      cell.addEventListener("click", listener);
     });
   };
 
@@ -115,4 +137,4 @@ const playerPlaceShips = (() => {
   return { placePicker };
 })();
 
-export { playerShipPlacement, playerPlaceShips };
+export { placementDisplay, playerPlaceShips };
