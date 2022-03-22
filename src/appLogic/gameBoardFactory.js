@@ -94,10 +94,8 @@ const gameBoardFactory = () => {
       generateUnavailable(arr).forEach((ele) => unavailable.push(ele));
     });
 
-    console.log(unavailable);
-
-    let x = parseInt(coords[0], 10);
-    let y = parseInt(coords[1], 10);
+    let x = coords[0];
+    let y = coords[1];
     if (isArrayInArray(unavailable, [x, y])) return false;
     for (let i = 1; i < ship.length; i += 1) {
       let checkCoords;
@@ -110,7 +108,6 @@ const gameBoardFactory = () => {
         y += 1;
         if (y > 9) return false;
         checkCoords = [x, y];
-        console.log(checkCoords);
       }
 
       if (isArrayInArray(unavailable, checkCoords)) {
