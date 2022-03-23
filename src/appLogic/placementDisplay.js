@@ -1,3 +1,5 @@
+import { displayLeftDiv } from "./DOMstuff";
+
 const placementDisplay = (board) => {
   const container = document.querySelector(".placer");
   board.getBoard().forEach((row, i) => {
@@ -109,6 +111,7 @@ const playerPlaceShips = (() => {
             overlay.classList.remove("overlay");
             const popup = document.querySelector(".placement");
             popup.style.display = "none";
+            displayLeftDiv(board);
           }
           ship = ships[idx];
           clearDisplay(document.querySelector(".placer"));

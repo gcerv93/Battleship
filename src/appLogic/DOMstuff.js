@@ -13,6 +13,7 @@ const clearDisplay = (element) => {
 
 const displayLeftDiv = (board) => {
   const leftDiv = document.querySelector(".left");
+  clearDisplay(leftDiv);
 
   // TODO: add support for when a shot is a hit or a miss
   board.getBoard().forEach((row, i) => {
