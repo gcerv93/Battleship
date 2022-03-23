@@ -22,10 +22,16 @@ const computerFactory = () => {
 
     const x = randomInteger(0, 9);
     const y = randomInteger(0, 9);
-    const z = randomInteger(1, 2);
+    let orientation = randomInteger(1, 2);
+
+    if (orientation === 2) {
+      orientation = "vertical";
+    } else {
+      orientation = "horizontal";
+    }
 
     result.push([x, y]);
-    result.push(z);
+    result.push(orientation);
 
     return result;
   }
