@@ -68,19 +68,20 @@ const displayRightDiv = (board) => {
 
 const addEventListeners = (board) => {
   const compBoard = document.querySelector(".right");
-  compBoard.addEventListener(
-    "click",
-    (e) => {
+  const promise = new Promise((resolve) => {
+    compBoard.addEventListener("click", (e) => {
       if (e.target.parentElement !== compBoard) {
         const rowIndex = parseInt(e.target.parentElement.dataset.index, 10);
         const cellIndex = parseInt(e.target.dataset.index, 10);
         board.receiveAttack([rowIndex, cellIndex]);
         clearDisplay(compBoard);
         displayRightDiv(board);
+        resolve();
       }
-    },
-    { once: true }
-  );
+    });
+  });
+
+  return promise;
 };
 
 export { displayLeftDiv, displayRightDiv, addEventListeners };
