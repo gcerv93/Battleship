@@ -62,7 +62,9 @@ const gameBoardFactory = () => {
   function sinkShip(sunkShip) {
     const index = ships.findIndex((ship) => sunkShip.name === ship.name);
 
-    ships.splice(index, 1);
+    if (index !== -1) {
+      ships.splice(index, 1);
+    }
   }
 
   function generateUnavailable(arr) {
