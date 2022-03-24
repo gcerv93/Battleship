@@ -12,6 +12,10 @@ const gameLoop = () => {
   const compGameBoard = gameBoardFactory();
 
   const gameOverCheck = () => {
+    // console.log(humanGameBoard.allSunk());
+    // console.log(compGameBoard.allSunk());
+    // console.log(compGameBoard.getShips());
+
     if (humanGameBoard.allSunk()) {
       return true;
     }
@@ -31,36 +35,28 @@ const gameLoop = () => {
       gameTurn();
     });
 
-    gameOverCheck();
+    if (gameOverCheck()) {
+      console.log("game over");
+    }
   };
-
-  gameTurn();
 
   placementDisplay(humanGameBoard);
   playerPlaceShips.placePicker(humanGameBoard, humanGameBoard.getShips());
 
+  compGameBoard.getShips().forEach((ship) => {
+    let result = compPlayer.generatePlacement();
+
+    while (!compGameBoard.validatePlacement(result[0], result[1], ship)) {
+      result = compPlayer.generatePlacement();
+    }
+
+    compGameBoard.placeShip(result[0], result[1], ship);
+  });
+
   displayLeftDiv(humanGameBoard);
   displayRightDiv(compGameBoard);
 
-  // add in computer ship placement
-
-  // playerShipPlacement(humanGameBoard);
-  // // FOR TESTING!!!
-  // const smallShip = humanGameBoard.getShips()[4];
-  // playerPlaceShips.placePicker(humanGameBoard, firstShip);
-
-  // humanGameBoard.placeShip([3, 3], "horizontal", firstShip);
-  // humanGameBoard.receiveAttack([3, 3]);
-  // humanGameBoard.receiveAttack([3, 2]);
-  // humanGameBoard.receiveAttack([2, 2]);
-  // humanGameBoard.receiveAttack([1, 2]);
-  // humanGameBoard.receiveAttack([3, 4]);
-
-  // const compShip = compGameBoard.getShips()[0];
-  // compGameBoard.placeShip([3, 3], "horizontal", compShip);
-  // compGameBoard.receiveAttack([3, 3]);
-  // compGameBoard.receiveAttack([3, 2]);
-  // // FOR TESTING!!!
+  gameTurn();
 };
 
 export default gameLoop;

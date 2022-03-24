@@ -43,6 +43,7 @@ const computerFactory = () => {
       coords = generateMove();
     }
 
+    console.log(coords);
     enemyBoard.receiveAttack(coords);
     previousMoves.push(coords);
   }
