@@ -67,10 +67,9 @@ describe("generatePlacement method", () => {
     expect(result.length).toBe(2);
   });
 
-  test("second element in return value is either 1 or 2", () => {
+  test("second element in return value is a string", () => {
     let computer = computerFactory();
     let result = computer.generatePlacement();
-    expect(result[1]).toBeGreaterThanOrEqual(1);
-    expect(result[1]).toBeLessThanOrEqual(2);
+    expect(typeof result[1]).toBe("string");
   });
 });
