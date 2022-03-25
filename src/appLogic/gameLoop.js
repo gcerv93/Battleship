@@ -1,5 +1,4 @@
 import computerFactory from "./computerFactory";
-import playerFactory from "./playerFactory";
 import gameBoardFactory from "./gameBoardFactory";
 import {
   addEventListeners,
@@ -10,7 +9,6 @@ import {
 import { placementDisplay, playerPlaceShips } from "./placementDisplay";
 
 const gameLoop = () => {
-  const humanPlayer = playerFactory("human");
   const compPlayer = computerFactory();
 
   const humanGameBoard = gameBoardFactory();
