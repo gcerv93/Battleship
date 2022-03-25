@@ -1,7 +1,12 @@
 import computerFactory from "./computerFactory";
 import playerFactory from "./playerFactory";
 import gameBoardFactory from "./gameBoardFactory";
-import { addEventListeners, displayLeftDiv, displayRightDiv } from "./DOMstuff";
+import {
+  addEventListeners,
+  displayLeftDiv,
+  displayRightDiv,
+  gameOverDisplay,
+} from "./DOMstuff";
 import { placementDisplay, playerPlaceShips } from "./placementDisplay";
 
 const gameLoop = () => {
@@ -12,10 +17,6 @@ const gameLoop = () => {
   const compGameBoard = gameBoardFactory();
 
   const gameOverCheck = () => {
-    // console.log(humanGameBoard.allSunk());
-    // console.log(compGameBoard.allSunk());
-    // console.log(compGameBoard.getShips());
-
     if (humanGameBoard.allSunk()) {
       return true;
     }
@@ -26,8 +27,6 @@ const gameLoop = () => {
     return false;
   };
 
-  const gameOver = () => {};
-
   const gameTurn = () => {
     addEventListeners(compGameBoard).then(() => {
       compPlayer.compTurn(humanGameBoard);
@@ -36,7 +35,11 @@ const gameLoop = () => {
     });
 
     if (gameOverCheck()) {
-      console.log("game over");
+      if (humanGameBoard.allSunk()) {
+        gameOverDisplay("You Lost :(");
+      } else {
+        gameOverDisplay("You Win!");
+      }
     }
   };
 

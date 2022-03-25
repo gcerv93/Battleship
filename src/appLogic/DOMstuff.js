@@ -84,4 +84,13 @@ const addEventListeners = (board) => {
   return promise;
 };
 
-export { displayLeftDiv, displayRightDiv, addEventListeners };
+const gameOverDisplay = (text) => {
+  const overlay = document.querySelector("#overlay");
+  const gameOver = document.querySelector(".gameOver");
+  const gameOverWinner = document.querySelector(".winner");
+  overlay.classList.add("overlay");
+  gameOver.style.display = "flex";
+  gameOverWinner.textContent = text;
+};
+
+export { displayLeftDiv, displayRightDiv, addEventListeners, gameOverDisplay };
