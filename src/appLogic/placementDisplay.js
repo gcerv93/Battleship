@@ -1,10 +1,5 @@
 import { displayPlayerDiv } from "./DOMstuff";
-
-const clearDisplay = (element) => {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-};
+import { clearDisplay } from "./helpers";
 
 const placementDisplay = (board) => {
   const overlay = document.querySelector("#overlay");
@@ -14,19 +9,23 @@ const placementDisplay = (board) => {
 
   const container = document.querySelector(".placer");
   clearDisplay(container);
+
   board.getBoard().forEach((row, i) => {
     const rowCell = document.createElement("div");
     rowCell.dataset.index = i;
     rowCell.classList.add("row");
     row.forEach((cell, idx) => {
+      // the Cell element takes two dataset entries to make it easier to access later on
       const boardCell = document.createElement("div");
       boardCell.dataset.row = i;
       boardCell.dataset.index = idx;
+
       if (cell === false) {
         boardCell.classList.add("cell");
       } else {
         boardCell.classList.add("occupied");
       }
+
       rowCell.appendChild(boardCell);
     });
     container.appendChild(rowCell);
@@ -34,7 +33,10 @@ const placementDisplay = (board) => {
 };
 
 const playerPlaceShips = (() => {
+  // rotator property helps to determine which way to place the ships in the placement display
   let rotator = 1;
+
+  // idx property helps loop through the ships passed in to the placePicker function
   let idx = 0;
 
   const resetProperties = () => {
@@ -62,7 +64,9 @@ const playerPlaceShips = (() => {
     return hoverCell;
   };
 
+  // function for the player to pick a place to place ships in the initial display
   const placePicker = (board, ships) => {
+    // loop through the ships using idx property, so that promises work correctly
     let ship = ships[idx];
 
     const shipText = document.querySelector(".shipText");
@@ -70,9 +74,11 @@ const playerPlaceShips = (() => {
 
     const cells = document.querySelectorAll(".placer .cell");
 
+    // 2 listeners, 1 hover in and 1 hover out, for displaying the ships in the placement display
     const hoverListener = (e) => {
       const rowIndex = e.target.parentElement.dataset.index;
       const cellIndex = e.target.dataset.index;
+
       if (rotator === 1) {
         for (let i = 0; i < ship.length; i += 1) {
           const hoverCell = horizontalElement(rowIndex, cellIndex, i);
@@ -89,6 +95,7 @@ const playerPlaceShips = (() => {
     const hoverOutListener = (e) => {
       const rowIndex = e.target.parentElement.dataset.index;
       const cellIndex = e.target.dataset.index;
+
       if (rotator === 1) {
         for (let i = 0; i < ship.length; i += 1) {
           const hoverCell = horizontalElement(rowIndex, cellIndex, i);
@@ -105,18 +112,22 @@ const playerPlaceShips = (() => {
     cells.forEach((cell) => {
       cell.addEventListener("mouseenter", hoverListener);
       cell.addEventListener("mouseleave", hoverOutListener);
+
       const listener = (e) => {
         const x = parseInt(e.target.dataset.row, 10);
         const y = parseInt(e.target.dataset.index, 10);
+
         let orientation;
         if (rotator === 1) {
           orientation = "horizontal";
         } else {
           orientation = "vertical";
         }
+
         if (board.validatePlacement([x, y], orientation, ship) === true) {
           board.placeShip([x, y], orientation, ship);
           idx += 1;
+
           if (idx === ships.length) {
             const overlay = document.querySelector("#overlay");
             overlay.classList.remove("overlay");
@@ -125,11 +136,13 @@ const playerPlaceShips = (() => {
             displayPlayerDiv(board);
             return;
           }
+
           ship = ships[idx];
           clearDisplay(document.querySelector(".placer"));
           placementDisplay(board);
           placePicker(board, ships);
         }
+
         cell.removeEventListener("click", listener);
       };
       cell.addEventListener("click", listener);
