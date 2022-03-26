@@ -154,12 +154,17 @@ const gameBoardFactory = () => {
 
   function receiveAttack(coords) {
     if (board[coords[0]][coords[1]] === false) {
-      missed.push(coords);
+      if (!isArrayInArray(missed, coords)) {
+        missed.push(coords);
+      }
     } else {
       const obj = board[coords[0]][coords[1]];
       obj.hit = true;
       obj.ship.hit(obj.index);
-      hits.push(coords);
+
+      if (!isArrayInArray(hits, coords)) {
+        hits.push(coords);
+      }
 
       if (obj.ship.isSunk()) {
         sinkShip(obj.ship);
