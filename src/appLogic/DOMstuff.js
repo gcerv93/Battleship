@@ -15,7 +15,6 @@ const displayLeftDiv = (board) => {
   const leftDiv = document.querySelector(".left");
   clearDisplay(leftDiv);
 
-  // TODO: add support for when a shot is a hit or a miss
   board.getBoard().forEach((row, i) => {
     const rowCell = document.createElement("div");
     rowCell.dataset.index = i;
@@ -67,7 +66,7 @@ const displayRightDiv = (board) => {
   });
 };
 
-const addEventListeners = (board) => {
+const listenForClick = (board) => {
   const compBoard = document.querySelector(".right");
   const promise = new Promise((resolve) => {
     compBoard.addEventListener("click", (e) => {
@@ -111,4 +110,4 @@ const gameOverDisplay = (text, newGame) => {
   playAgainListener(newGame);
 };
 
-export { displayLeftDiv, displayRightDiv, addEventListeners, gameOverDisplay };
+export { displayLeftDiv, displayRightDiv, listenForClick, gameOverDisplay };

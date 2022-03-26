@@ -1,5 +1,5 @@
-import Computer from "./Computer";
-import Gameboard from "./Gameboard";
+import Computer from "./Factories/Computer";
+import Gameboard from "./Factories/Gameboard";
 import {
   listenForClick,
   displayLeftDiv,

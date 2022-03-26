@@ -1,4 +1,4 @@
-import Gameboard from "../appLogic/Gameboard";
+import Gameboard from "../appLogic/Factories/Gameboard";
 
 test("returns an object with a missed property", () => {
   let gameboard = Gameboard();

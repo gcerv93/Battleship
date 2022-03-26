@@ -1,4 +1,4 @@
-import Computer from "../appLogic/Computer";
+import Computer from "../appLogic/Factories/Computer";
 
 test("returns an object with a compTurn method", () => {
   let computer = Computer();
