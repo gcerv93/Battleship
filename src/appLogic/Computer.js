@@ -1,4 +1,4 @@
-const computerFactory = () => {
+const Computer = () => {
   const previousMoves = [];
 
   function randomInteger(min, max) {
@@ -50,4 +50,4 @@ const computerFactory = () => {
   return { previousMoves, generateMove, generatePlacement, compTurn };
 };
 
-export default computerFactory;
+export default Computer;

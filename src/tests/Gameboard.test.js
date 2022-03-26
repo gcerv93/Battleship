@@ -1,42 +1,42 @@
-import gameBoardFactory from "../appLogic/gameBoardFactory";
+import Gameboard from "../appLogic/Gameboard";
 
 test("returns an object with a missed property", () => {
-  let gameboard = gameBoardFactory();
+  let gameboard = Gameboard();
   expect(gameboard).toHaveProperty("missed");
 });
 
 test("returns an object with a placeShip property", () => {
-  let gameboard = gameBoardFactory();
+  let gameboard = Gameboard();
   expect(gameboard).toHaveProperty("placeShip");
 });
 
 test("returns an object with a allSunk property", () => {
-  let gameboard = gameBoardFactory();
+  let gameboard = Gameboard();
   expect(gameboard).toHaveProperty("allSunk");
 });
 
 test("returns an object with a hits property", () => {
-  let gameboard = gameBoardFactory();
+  let gameboard = Gameboard();
   expect(gameboard).toHaveProperty("hits");
 });
 
 test("returns an object with a getOccupied method", () => {
-  let gameboard = gameBoardFactory();
+  let gameboard = Gameboard();
   expect(gameboard).toHaveProperty("getOccupied");
 });
 
 test("returns an object with a getBoard method", () => {
-  let gameboard = gameBoardFactory();
+  let gameboard = Gameboard();
   expect(gameboard).toHaveProperty("getBoard");
 });
 
 test("returns an object with a receiveAttack method", () => {
-  let gameboard = gameBoardFactory();
+  let gameboard = Gameboard();
   expect(gameboard).toHaveProperty("receiveAttack");
 });
 
 test("returns an object with a getShips method", () => {
-  let gameboard = gameBoardFactory();
+  let gameboard = Gameboard();
   expect(gameboard).toHaveProperty("getShips");
 });
 
@@ -45,7 +45,7 @@ describe("object methods", () => {
     describe("vertical positioning", () => {
       test("places the start of the ship correctly", () => {
         let ship = { name: "destroyer", length: 3 };
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         gameboard.placeShip([3, 3], "vertical", ship);
         expect(gameboard.getBoard()[3][3]).toEqual({
           ship: ship,
@@ -58,7 +58,7 @@ describe("object methods", () => {
 
       test("places the end of the ship correctly", () => {
         let ship = { name: "battleship", length: 4 };
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         gameboard.placeShip([2, 2], "vertical", ship);
         expect(gameboard.getBoard()[5][2]).toEqual({
           ship: ship,
@@ -73,7 +73,7 @@ describe("object methods", () => {
     describe("horizontal positioning", () => {
       test("places the start of the ship correctly", () => {
         let ship = { name: "patrol boat", length: 2 };
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         gameboard.placeShip([4, 4], "horizontal", ship);
         expect(gameboard.getBoard()[4][4]).toEqual({
           ship: ship,
@@ -86,7 +86,7 @@ describe("object methods", () => {
 
       test("places the end of the ship correctly", () => {
         let ship = { name: "carrier", length: 5 };
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         gameboard.placeShip([2, 3], "horizontal", ship);
         expect(gameboard.getBoard()[2][7]).toEqual({
           ship: ship,
@@ -102,7 +102,7 @@ describe("object methods", () => {
   describe("receiveAttack", () => {
     describe("when shot misses", () => {
       test("pushes coordinates to missed array when shot misses", () => {
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         let misses = gameboard.missed.length;
         gameboard.receiveAttack([3, 3]);
         expect(gameboard.missed.length).toBe(misses + 1);
@@ -111,7 +111,7 @@ describe("object methods", () => {
 
     describe("when shot hits", () => {
       test("changes object at location's hit property to true", () => {
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         let myMock = jest.fn();
         const myOtherMock = jest.fn();
         let ship = {
@@ -126,7 +126,7 @@ describe("object methods", () => {
       });
 
       test("sends the hit function to the ship", () => {
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         const myMock = jest.fn();
         const myOtherMock = jest.fn();
         let ship = {
@@ -142,7 +142,7 @@ describe("object methods", () => {
       });
 
       test("sends the isSunk message to the ship", () => {
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         const myMock = jest.fn();
         const myOtherMock = jest.fn();
         let ship = {
@@ -157,7 +157,7 @@ describe("object methods", () => {
       });
 
       test("removes ship from ships array if ship is sunk", () => {
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         const myMock = jest.fn();
         const myOtherMock = jest.fn();
         const shipsArrayLength = gameboard.getShips().length;
@@ -174,7 +174,7 @@ describe("object methods", () => {
       });
 
       test("adds hits to hits array when shot hits", () => {
-        let gameboard = gameBoardFactory();
+        let gameboard = Gameboard();
         const myMock = jest.fn();
         const myOtherMock = jest.fn();
         const hitsArrayLength = gameboard.hits.length;
@@ -194,13 +194,13 @@ describe("object methods", () => {
 
   describe("allSunk", () => {
     test("returns false when not all ships have been sunk", () => {
-      let gameboard = gameBoardFactory();
+      let gameboard = Gameboard();
       const result = gameboard.allSunk();
       expect(result).toBe(false);
     });
 
     test("returns true when all ships are sunk", () => {
-      let gameboard = gameBoardFactory();
+      let gameboard = Gameboard();
       let ships = [];
       const result = gameboard.allSunk(ships);
       expect(result).toBe(true);
@@ -209,7 +209,7 @@ describe("object methods", () => {
 
   describe("getOccupied", () => {
     test("returns the coordinates of the board that are occupied", () => {
-      let gameboard = gameBoardFactory();
+      let gameboard = Gameboard();
       let myMock = jest.fn();
       let myOtherMock = jest.fn();
       let ship = {

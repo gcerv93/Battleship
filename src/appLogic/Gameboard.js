@@ -1,6 +1,6 @@
-import shipFactory from "./shipFactory";
+import Ship from "./Ship";
 
-const gameBoardFactory = () => {
+const Gameboard = () => {
   const board = [
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
@@ -18,11 +18,11 @@ const gameBoardFactory = () => {
   const hits = [];
 
   function createShips() {
-    const carrier = shipFactory("carrier", 5);
-    const battleship = shipFactory("battleship", 4);
-    const destroyer = shipFactory("destroyer", 3);
-    const submarine = shipFactory("submarine", 3);
-    const patrolBoat = shipFactory("patrol boat", 2);
+    const carrier = Ship("carrier", 5);
+    const battleship = Ship("battleship", 4);
+    const destroyer = Ship("destroyer", 3);
+    const submarine = Ship("submarine", 3);
+    const patrolBoat = Ship("patrol boat", 2);
 
     return [carrier, battleship, destroyer, submarine, patrolBoat];
   }
@@ -185,4 +185,4 @@ const gameBoardFactory = () => {
   };
 };
 
-export default gameBoardFactory;
+export default Gameboard;

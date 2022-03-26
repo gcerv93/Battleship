@@ -1,5 +1,5 @@
-import computerFactory from "./computerFactory";
-import gameBoardFactory from "./gameBoardFactory";
+import Computer from "./Computer";
+import Gameboard from "./Gameboard";
 import {
   addEventListeners,
   displayLeftDiv,
@@ -9,10 +9,10 @@ import {
 import { placementDisplay, playerPlaceShips } from "./placementDisplay";
 
 const gameLoop = () => {
-  const compPlayer = computerFactory();
+  const compPlayer = Computer();
 
-  const humanGameBoard = gameBoardFactory();
-  const compGameBoard = gameBoardFactory();
+  const humanGameBoard = Gameboard();
+  const compGameBoard = Gameboard();
 
   const gameOverCheck = () => {
     if (humanGameBoard.allSunk()) {
