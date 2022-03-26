@@ -222,3 +222,23 @@ header {
 .playAgain:hover {
   border: 1px solid black;
 }
+
+footer {
+  height: 30px;
+  display: flex;
+  font-size: 0.9rem;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer a {
+  text-decoration: none;
+  color: black;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
