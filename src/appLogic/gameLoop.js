@@ -2,8 +2,8 @@ import Computer from "./Factories/Computer";
 import Gameboard from "./Factories/Gameboard";
 import {
   listenForClick,
-  displayLeftDiv,
-  displayRightDiv,
+  displayPlayerDiv,
+  displayCompDiv,
   gameOverDisplay,
 } from "./DOMstuff";
 import { placementDisplay, playerPlaceShips } from "./placementDisplay";
@@ -38,7 +38,7 @@ const gameLoop = () => {
     } else {
       listenForClick(compGameBoard).then(() => {
         compPlayer.compTurn(humanGameBoard);
-        displayLeftDiv(humanGameBoard);
+        displayPlayerDiv(humanGameBoard);
         gameTurn();
       });
     }
@@ -57,8 +57,8 @@ const gameLoop = () => {
     compGameBoard.placeShip(result[0], result[1], ship);
   });
 
-  displayLeftDiv(humanGameBoard);
-  displayRightDiv(compGameBoard);
+  displayPlayerDiv(humanGameBoard);
+  displayCompDiv(compGameBoard);
 
   gameTurn();
 };

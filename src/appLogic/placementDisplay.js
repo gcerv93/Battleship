@@ -1,4 +1,4 @@
-import { displayLeftDiv } from "./DOMstuff";
+import { displayPlayerDiv } from "./DOMstuff";
 
 const clearDisplay = (element) => {
   while (element.firstChild) {
@@ -122,7 +122,7 @@ const playerPlaceShips = (() => {
             overlay.classList.remove("overlay");
             const popup = document.querySelector(".placement");
             popup.style.display = "none";
-            displayLeftDiv(board);
+            displayPlayerDiv(board);
             return;
           }
           ship = ships[idx];

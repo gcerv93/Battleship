@@ -1,19 +1,8 @@
-const isArrayInArray = (arr, item) => {
-  const itemAsString = JSON.stringify(item);
+import { isArrayInArray, clearDisplay } from "./helpers";
 
-  const contains = arr.some((ele) => JSON.stringify(ele) === itemAsString);
-  return contains;
-};
-
-const clearDisplay = (element) => {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-};
-
-const displayLeftDiv = (board) => {
-  const leftDiv = document.querySelector(".left");
-  clearDisplay(leftDiv);
+const displayPlayerDiv = (board) => {
+  const playerDiv = document.querySelector(".left");
+  clearDisplay(playerDiv);
 
   board.getBoard().forEach((row, i) => {
     const rowCell = document.createElement("div");
@@ -37,13 +26,13 @@ const displayLeftDiv = (board) => {
 
       rowCell.appendChild(boardCell);
     });
-    leftDiv.appendChild(rowCell);
+    playerDiv.appendChild(rowCell);
   });
 };
 
-const displayRightDiv = (board) => {
-  const rightDiv = document.querySelector(".right");
-  clearDisplay(rightDiv);
+const displayCompDiv = (board) => {
+  const compDiv = document.querySelector(".right");
+  clearDisplay(compDiv);
 
   board.getBoard().forEach((row, i) => {
     const rowCell = document.createElement("div");
@@ -54,7 +43,7 @@ const displayRightDiv = (board) => {
       boardCell.dataset.index = idx;
       boardCell.classList.add("cell");
 
-      if (cell.hit) {
+      if (cell.hit === true) {
         boardCell.classList.add("hit");
       } else if (isArrayInArray(board.missed, [i, idx])) {
         boardCell.classList.add("miss");
@@ -62,10 +51,11 @@ const displayRightDiv = (board) => {
 
       rowCell.appendChild(boardCell);
     });
-    rightDiv.appendChild(rowCell);
+    compDiv.appendChild(rowCell);
   });
 };
 
+// Returns a promise for the game loop to function in turn based fashion.
 const listenForClick = (board) => {
   const compBoard = document.querySelector(".right");
   const promise = new Promise((resolve) => {
@@ -75,7 +65,7 @@ const listenForClick = (board) => {
         const cellIndex = parseInt(e.target.dataset.index, 10);
         board.receiveAttack([rowIndex, cellIndex]);
         clearDisplay(compBoard);
-        displayRightDiv(board);
+        displayCompDiv(board);
         resolve();
       }
     });
@@ -110,4 +100,4 @@ const gameOverDisplay = (text, newGame) => {
   playAgainListener(newGame);
 };
 
-export { displayLeftDiv, displayRightDiv, listenForClick, gameOverDisplay };
+export { displayPlayerDiv, displayCompDiv, listenForClick, gameOverDisplay };
