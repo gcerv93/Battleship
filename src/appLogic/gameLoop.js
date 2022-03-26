@@ -1,7 +1,7 @@
 import Computer from "./Computer";
 import Gameboard from "./Gameboard";
 import {
-  addEventListeners,
+  listenForClick,
   displayLeftDiv,
   displayRightDiv,
   gameOverDisplay,
@@ -25,16 +25,18 @@ const gameLoop = () => {
     return false;
   };
 
+  // recursive function instead of a loop for the game, so that I can wait on the click promise from listenForClick
   const gameTurn = () => {
     if (gameOverCheck()) {
       playerPlaceShips.resetProperties();
+
       if (humanGameBoard.allSunk()) {
         gameOverDisplay("You Lost :(", gameLoop);
       } else {
         gameOverDisplay("You Win!", gameLoop);
       }
     } else {
-      addEventListeners(compGameBoard).then(() => {
+      listenForClick(compGameBoard).then(() => {
         compPlayer.compTurn(humanGameBoard);
         displayLeftDiv(humanGameBoard);
         gameTurn();
