@@ -1,4 +1,5 @@
 import Ship from "./Ship";
+import { isArrayInArray } from "../helpers";
 
 const Gameboard = () => {
   const board = [
@@ -81,13 +82,6 @@ const Gameboard = () => {
 
     return unavailable;
   }
-
-  const isArrayInArray = (arr, item) => {
-    const itemAsString = JSON.stringify(item);
-
-    const contains = arr.some((ele) => JSON.stringify(ele) === itemAsString);
-    return contains;
-  };
 
   function validatePlacement(coords, orientation, ship) {
     const occupied = getOccupied();
