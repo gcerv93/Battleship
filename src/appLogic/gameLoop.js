@@ -26,18 +26,19 @@ const gameLoop = () => {
   };
 
   const gameTurn = () => {
-    addEventListeners(compGameBoard).then(() => {
-      compPlayer.compTurn(humanGameBoard);
-      displayLeftDiv(humanGameBoard);
-      gameTurn();
-    });
-
     if (gameOverCheck()) {
+      playerPlaceShips.resetProperties();
       if (humanGameBoard.allSunk()) {
-        gameOverDisplay("You Lost :(");
+        gameOverDisplay("You Lost :(", gameLoop);
       } else {
-        gameOverDisplay("You Win!");
+        gameOverDisplay("You Win!", gameLoop);
       }
+    } else {
+      addEventListeners(compGameBoard).then(() => {
+        compPlayer.compTurn(humanGameBoard);
+        displayLeftDiv(humanGameBoard);
+        gameTurn();
+      });
     }
   };
 

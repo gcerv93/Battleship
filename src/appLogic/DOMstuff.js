@@ -44,6 +44,7 @@ const displayLeftDiv = (board) => {
 
 const displayRightDiv = (board) => {
   const rightDiv = document.querySelector(".right");
+  clearDisplay(rightDiv);
 
   board.getBoard().forEach((row, i) => {
     const rowCell = document.createElement("div");
@@ -84,13 +85,30 @@ const addEventListeners = (board) => {
   return promise;
 };
 
-const gameOverDisplay = (text) => {
+const playAgainListener = (newGame) => {
+  const playAgainBtn = document.querySelector(".playAgain");
+  playAgainBtn.addEventListener(
+    "click",
+    () => {
+      const overlay = document.querySelector("#overlay");
+      const gameOver = document.querySelector(".gameOver");
+      overlay.classList.remove("overlay");
+      gameOver.style.display = "none";
+      newGame();
+    },
+    { once: true }
+  );
+};
+
+const gameOverDisplay = (text, newGame) => {
   const overlay = document.querySelector("#overlay");
   const gameOver = document.querySelector(".gameOver");
   const gameOverWinner = document.querySelector(".winner");
   overlay.classList.add("overlay");
   gameOver.style.display = "flex";
   gameOverWinner.textContent = text;
+
+  playAgainListener(newGame);
 };
 
 export { displayLeftDiv, displayRightDiv, addEventListeners, gameOverDisplay };

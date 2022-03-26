@@ -1,7 +1,19 @@
 import { displayLeftDiv } from "./DOMstuff";
 
+const clearDisplay = (element) => {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+};
+
 const placementDisplay = (board) => {
+  const overlay = document.querySelector("#overlay");
+  overlay.classList.add("overlay");
+  const containerParent = document.querySelector(".placement");
+  containerParent.style.display = "flex";
+
   const container = document.querySelector(".placer");
+  clearDisplay(container);
   board.getBoard().forEach((row, i) => {
     const rowCell = document.createElement("div");
     rowCell.dataset.index = i;
@@ -21,15 +33,14 @@ const placementDisplay = (board) => {
   });
 };
 
-const clearDisplay = (element) => {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-};
-
 const playerPlaceShips = (() => {
   let rotator = 1;
   let idx = 0;
+
+  const resetProperties = () => {
+    idx = 0;
+    rotator = 1;
+  };
 
   const horizontalElement = (rowIndex, cellIndex, i) => {
     const rowNum = parseInt(rowIndex, 10);
@@ -112,6 +123,7 @@ const playerPlaceShips = (() => {
             const popup = document.querySelector(".placement");
             popup.style.display = "none";
             displayLeftDiv(board);
+            return;
           }
           ship = ships[idx];
           clearDisplay(document.querySelector(".placer"));
@@ -137,7 +149,7 @@ const playerPlaceShips = (() => {
     changeRotator();
   });
 
-  return { placePicker };
+  return { placePicker, resetProperties };
 })();
 
 export { placementDisplay, playerPlaceShips };
