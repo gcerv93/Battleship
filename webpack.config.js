@@ -3,9 +3,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: ["regenerator-runtime/runtime.js", "./src/index.js"],
-  devtool: "inline-source-map",
   plugins: [
     new HtmlWebpackPlugin({
       title: "BattleShip",
@@ -16,6 +15,7 @@ module.exports = {
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
+    clean: true,
   },
   module: {
     rules: [
